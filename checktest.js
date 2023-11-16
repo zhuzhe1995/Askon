@@ -23,3 +23,27 @@ Array.from(document.querySelector("#inputArriveStName").options).forEach(functio
             if (option_element.text=="岡山") arriveID.value=option_element.value;
     });
  
+//$('#submitButton').prop('disabled', false).removeClass('basic-button--disabled');
+var a=document.getElementById('submitButton')
+//a.setAttribute('disabled','false')
+a.classList.remove('basic-button--disabled')
+a.classList.remove('disabled')
+
+$(".toggle-check-button-2").each(function(i, obj) {
+    if ($(this).children('input').eq(0).checked) {
+        if ($(this).children('input').eq(0).checked="checked") {return false;}
+        else {$(this).trigger('click');return false;}
+    }else {//test
+        $(this).trigger('click');
+        return false;
+    }
+});
+$(".decide-button").trigger('click');//https://e5489.jr-odekake.net/e5489/cspc/CBDayTimeArriveSelRsvMyDiaPC
+$(".decide-button").trigger('click');//https://e5489.jr-odekake.net/e5489/cspc/CBVacantCompPC
+$(".decide-button").trigger('click');//https://e5489.jr-odekake.net/e5489/cspc/CBRoutePC
+$(".toggle-check-button").eq(1).trigger('click');//https://e5489.jr-odekake.net/e5489/cspc/CBNumberSeatPC
+$(".toggle-check-button").eq(6).trigger('click');//https://e5489.jr-odekake.net/e5489/cspc/CBNumberSeatPC
+$(".decide-button").trigger('click');//https://e5489.jr-odekake.net/e5489/cspc/CBNumberSeatPC
+$(".payment-method__choice-list").children('li').eq(0).children('label').children('input').trigger('click');//https://e5489.jr-odekake.net/e5489/cspc/CBRsvFinalConfNumberSeatPC
+window.location.href
+
