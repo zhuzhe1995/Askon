@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Sunrise_autoclick
 // @namespace    http://tampermonkey.net/
-// @version      0.3.1
+// @version      0.3.2
 // @description  try to take over the world!
 // @author       You
 // @match        https://e5489.jr-odekake.net/e5489/cspc/CB*
@@ -37,6 +37,18 @@ if (current_url.includes("CBDayTimeArriveSelRsvMyDia")) {
     //$(".toggle-check-button").eq(6).trigger('click');//https://e5489.jr-odekake.net/e5489/cspc/CBNumberSeatPC
     $(".decide-button").trigger('click');//https://e5489.jr-odekake.net/e5489/cspc/CBNumberSeatPC
 }else if (current_url.includes("CBRsvFinalConfNumberSeat")){
-    $(".payment-method__choice-list").children('li').eq(0).children('label').children('input').trigger('click');
+    let pay_method_for_ticket="card";
+    if (pay_method_for_ticket=="card") {
+        $("[data-id='select1']").trigger('click') //Select the second tab
+        $("input[name=settlemthdKbn][value=1]:radio").eq(0).trigger('click') //Select pay in station
+    }else{ //else payment method
+        $("[data-id='select2']").trigger('click') //Select the second tab
+        $("input[name=settlemthdKbn][value=4]:radio").trigger('click') //Select pay in station
+    }
+    //$(".payment-method__choice-list").children('li').eq(0).children('label').children('input').trigger('click');
+    let pay_the_final_bill=false;
+    if (pay_the_final_bill==true) {
+        $(".decide-button-2#purchase-button").trigger('click');
+    }
     //https://e5489.jr-odekake.net/e5489/cspc/CBRsvFinalConfNumberSeatPC
 }

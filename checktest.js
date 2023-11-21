@@ -47,3 +47,7 @@ $(".decide-button").trigger('click');//https://e5489.jr-odekake.net/e5489/cspc/C
 $(".payment-method__choice-list").children('li').eq(0).children('label').children('input').trigger('click');//https://e5489.jr-odekake.net/e5489/cspc/CBRsvFinalConfNumberSeatPC
 window.location.href
 
+$("[data-id='select2']").trigger('click') //Select the second tab
+$("input[name=settlemthdKbn][value=4]:radio").trigger('click') //Select pay in station
+//function setDisabledArea(set_disabled_target, checked)  in cp/common/js/lib/library.js
+//removeAttribute("disabled")
