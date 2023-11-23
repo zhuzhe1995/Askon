@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Sunrise_autoclick
 // @namespace    http://tampermonkey.net/
-// @version      0.3.2
+// @version      0.3.3
 // @description  try to take over the world!
 // @author       You
 // @match        https://e5489.jr-odekake.net/e5489/cspc/CB*
@@ -12,7 +12,7 @@
 //https://code.jquery.com/jquery-3.6.0.min.js
 
 var current_url=window.location.href
-if (current_url.includes("CBDayTimeArriveSelRsvMyDia")) {
+if (current_url.includes("CBDayTimeArriveSelRsvMyDia")||current_url.includes("CBAdvConfRoute")) {
     $(".toggle-check-button-2").each(function(i, obj) {
         if ($(this).children('input').eq(0).checked) {
             if ($(this).children('input').eq(0).checked="checked") {return false;}
@@ -21,7 +21,7 @@ if (current_url.includes("CBDayTimeArriveSelRsvMyDia")) {
     });
     $(".decide-button").trigger('click');
     //https://e5489.jr-odekake.net/e5489/cspc/CBDayTimeArriveSelRsvMyDiaPC
-}else if (current_url.includes("CBVacantComp")){
+}else if (current_url.includes("CBVacantComp")||current_url.includes("CBAdvFinalConfNumberSeat")){
     $(".decide-button").trigger('click');
     //https://e5489.jr-odekake.net/e5489/cspc/CBVacantCompPC
 }else if (current_url.includes("CBRoute")){
@@ -45,6 +45,7 @@ if (current_url.includes("CBDayTimeArriveSelRsvMyDia")) {
         $("[data-id='select2']").trigger('click') //Select the second tab
         $("input[name=settlemthdKbn][value=4]:radio").trigger('click') //Select pay in station
     }
+    $('html, body').scrollTop( $(document).height());
     //$(".payment-method__choice-list").children('li').eq(0).children('label').children('input').trigger('click');
     let pay_the_final_bill=false;
     if (pay_the_final_bill==true) {
