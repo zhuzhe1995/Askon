@@ -1,12 +1,11 @@
 // ==UserScript==
 // @name        notify_cyberstation
 // @namespace    http://tampermonkey.net/
-// @version      0.0.6
+// @version      0.0.9
 // @description  try to take over the world!
 // @author       You
 // @match     https://www1.jr.cyberstation.ne.jp/jcs/Vacancy.do
 // @require     https://code.jquery.com/jquery-3.6.0.min.js
-// @require     file:///home/tzuyu/workspace/jrwest/Askon/notify/poi.wav
 // @grant       GM_addStyle
 // @grant       GM_log
 // ==/UserScript==
@@ -18,18 +17,21 @@
 
 var vacancy_exist=false;
 var available_train="";
-var dt = Date($("now"));
+var dt = new Date();
 $("table#table_vacancy tbody tr").each(function(n,obj){
-    var train_name=$(this).find(".table_train_name").text();
+    var train_name=$(this).find(".table_train_name").text()
+      +$(this).find(".table_vacancy_time").text();
     if ($(this).children("td").eq(1).text().includes('○')){
         $(this).css("background-color","lightpink");
         vacancy_exist=true;
-        available_train+=train_name+" ";
+        available_train+=
+          train_name.replaceAll('\t','').replace('\n\n','->');
     }
     if ($(this).children("td").eq(1).text().includes('△')){
         $(this).css("background-color","lightgreen");
         vacancy_exist=true;
-        available_train+=train_name+" ";
+        available_train+=
+          train_name.replaceAll('\t','').replace('\n\n','->');
     }
 });
 if (!('Notification' in window)){
@@ -43,11 +45,15 @@ else {
     });
 }
 if (vacancy_exist) {
-    GM_log(dt+available_train);
+    GM_log(dt.toLocaleString('ja')+
+      $("#table_vacancy>thead>tr:nth-child(1)>th>span:nth-child(1)").text()
+      +available_train);
     var noti= new Notification(
-        "JR CYBER STATION 空席あり",
+        "JR CYBER STATION 空席あり"
+          +$("#table_vacancy>thead>tr:nth-child(1)>th>span:nth-child(1)").text(),
         {
-            body: dt+available_train,
+            body: dt.toLocaleString('ja')
+                    +"\n"+available_train,
             icon: 'https://image.jr.cyberstation.ne.jp/images/common/icons/normal.png',
             tag: '',
             data: {
@@ -59,7 +65,14 @@ if (vacancy_exist) {
     setTimeout(noti.close.bind(noti),8*1000);
 }
 else {
-    GM_log(dt+"no available");
+    GM_log(dt.toLocaleString('ja')+" no available");
 }
 
-setTimeout(function(){ location.reload(); }, 300*1000);
+var reload_time=2;// 2 minutes
+var current_minutes=dt.getHours()*60+dt.getMinutes()+dt.getTimezoneOffset()+540;
+if (current_minutes<360 || current_minutes+reload_time>=1430) {
+    var rest_time=(1800-current_minutes)%1440;
+    setTimeout(function(){ location.reload(); }, rest_time*60*1000);
+}else {
+    setTimeout(function(){ location.reload(); }, reload_time*60*1000);
+}
