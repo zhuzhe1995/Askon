@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name        notify_cyberstation
 // @namespace    http://tampermonkey.net/
-// @version      0.0.9
+// @version      0.1.1
 // @description  try to take over the world!
 // @author       You
 // @match     https://www1.jr.cyberstation.ne.jp/jcs/Vacancy.do
@@ -45,23 +45,33 @@ else {
     });
 }
 if (vacancy_exist) {
-    GM_log(dt.toLocaleString('ja')+
-      $("#table_vacancy>thead>tr:nth-child(1)>th>span:nth-child(1)").text()
-      +available_train);
+    var train_date=$("#table_vacancy>thead>tr:nth-child(1)>th>span:nth-child(1)").text()
+    GM_log(dt.toLocaleString('ja')+train_date+available_train);
     var noti= new Notification(
-        "JR CYBER STATION 空席あり"
-          +$("#table_vacancy>thead>tr:nth-child(1)>th>span:nth-child(1)").text(),
+        "JR CYBER STATION 空席あり"+train_date,
         {
             body: dt.toLocaleString('ja')
-                    +"\n"+available_train,
+                    +"\n"+available_train.replace(/\n+$/, ""),
             icon: 'https://image.jr.cyberstation.ne.jp/images/common/icons/normal.png',
             tag: '',
             data: {
                 xxx: '開発中'
             }
         });
-    const poi = "https://www.myinstants.com/media/sounds/poi.mp3";
-    new Audio(poi).play();
+    const poi_voice_notification = "https://www.myinstants.com/media/sounds/poi.mp3";
+    new Audio(poi_voice_notification).play();
+    var google_sheet_url="";
+    if (google_sheet_url.includes("https://script.google.com"))
+    {$.ajax({
+        url:google_sheet_url,
+        method:'POST',
+        data:{Fetch_Time: dt.toLocaleString('ja'), Travel_Date: train_date,
+              Train_Info: available_train.replaceAll('\n','')}
+    }).done(function(data, textStatus, jqXHR){
+        //console.log(data);
+        console.log(jqXHR.responseText);
+        $("body").append("<div><p>"+jqXHR.responseText+"</p></div>");
+    });}//send information to google sheet
     setTimeout(noti.close.bind(noti),8*1000);
 }
 else {
