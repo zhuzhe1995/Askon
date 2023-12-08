@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name        notify_cyberstation
 // @namespace    http://tampermonkey.net/
-// @version      0.1.1
+// @version      0.1.2
 // @description  try to take over the world!
 // @author       You
 // @match     https://www1.jr.cyberstation.ne.jp/jcs/Vacancy.do
@@ -37,7 +37,8 @@ $("table#table_vacancy tbody tr").each(function(n,obj){
 if (!('Notification' in window)){
     alert('未対応のブラウザです');
 }
-else {
+else if (Notification.permission==='granted'){}
+else if (Notification.permission!=='denied') {
     Notification.requestPermission().then((permission) => {
         if (permission == 'granted'){}
         else if (permission == 'denied'){}
@@ -58,6 +59,7 @@ if (vacancy_exist) {
                 xxx: '開発中'
             }
         });
+    noti.onclick=function(e) {window.focus();}
     const poi_voice_notification = "https://www.myinstants.com/media/sounds/poi.mp3";
     new Audio(poi_voice_notification).play();
     var google_sheet_url="";
