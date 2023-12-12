@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Sunrise_autoclick
 // @namespace    http://tampermonkey.net/
-// @version      0.3.8
+// @version      0.3.9
 // @description  try to take over the world!
 // @author       You
 // @match        https://e5489.jr-odekake.net/e5489/cspc/CB*
@@ -24,6 +24,7 @@
   '%BB%B2%BD%D3%BC000':4,  '%BB%B2%BD%D3%BF000':5,  '%BB%B2%BD%D3%BB000':6
 }*/
 var facIdBank = {
+  0:['Nodata'],
   1:['%25BB%25BE%25C4%2520%2520000','%25BB%25B2%25BD%25D3%2520000','%BB%BE%C4%20%20000','%BB%B2%BD%D3%20000'],
   2:['%25BB%25BE%25C4%2520%2520000','%25BB%25B2%25BD%25D3%2520000','%BB%BE%C4%20%20000','%BB%B2%BD%D3%20000'],
   3:['%25BB%25BE%25C4%2520%2520000','%25BB%25B2%25BD%25D3%2520000','%BB%BE%C4%20%20000','%BB%B2%BD%D3%20000'],
@@ -54,7 +55,7 @@ if (current_url.includes("CBDayTimeArriveSelRsvMyDia")||current_url.includes("CB
             else {$(obj).find(".toggle-check-button-2").trigger('click');return false;}
         }//console.log('unclicked');
         return true;}
-    if (!facIdBank[reserv_type].includes(params['inputSpecificBriefTrainKana1'])) reserv_type=0;
+    if (reserv_type!=0&& !facIdBank[reserv_type].includes(params['inputSpecificBriefTrainKana1'])) reserv_type=0;
     if (reserv_type==1) {
       $("table.js-filfac-target > tbody > tr > td").each(function (n,obj){
         if (n==0) return try_click_seat_obj(obj);});
