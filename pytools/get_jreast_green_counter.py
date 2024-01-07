@@ -29,14 +29,14 @@ def get_jre_green():
         s.headers['Referer']= 'https://www.jreast.co.jp/estation/'
         r = s.get(auth_url+faci_path)
         #print(r)
-        soup = BeautifulSoup(r.text)
+        soup = BeautifulSoup(r.text,features="lxml")
         for line_tb in soup.select('div.basicTable'):
             for line_a in line_tb.select('td.link > a'):
                 line_name=line_a.text
                 line_path=line_a['href']
                 r2=s.get(auth_url+line_path)
                 #print(r2)
-                soup2 = BeautifulSoup(r2.text)
+                soup2 = BeautifulSoup(r2.text,features="lxml")
                 JRE_lines.append(line_name)
                 JRE_line_sts.append([])
                 for st_a in soup2.select('div.basicTable > table > tbody > tr > td.link > a'):
@@ -52,7 +52,7 @@ def get_jre_green():
                         JRE_sts[st_cd].def_url(auth_url+st_path)
                         JRE_sts[st_cd].add_line(line_name)
                         r3=s.get(auth_url+st_path)
-                        soup3 = BeautifulSoup(r3.text)
+                        soup3 = BeautifulSoup(r3.text,features="lxml")
                         for dl in soup3.select('section#el_basic > dl.basicInfo_box'):
                             if ("駅住所" in dl.select('dt')[0].get_text()):
                                 JRE_sts[st_cd].set_addr(dl.select('dd')[0].get_text())
@@ -61,7 +61,8 @@ def get_jre_green():
 
 def save_jre_green_data(fn="jre_green_"+datetime.datetime.now().strftime('%Y%m%d')+".npz"):
     JRE_lines, JRE_line_sts, JRE_sts = get_jre_green()
-    np.savez(fn,lines=JRE_lines,line_sts=JRE_line_sts,sts=JRE_sts,dtype=object)
+    np.savez(fn,lines=np.asanyarray(JRE_lines,dtype='object'),line_sts=np.asanyarray(JRE_line_sts,dtype='object'),sts=np.asanyarray(JRE_sts,dtype='object'))
+    #np.savez(fn,lines=JRE_lines,line_sts=JRE_line_sts,sts=JRE_sts,dtype=object)
     return JRE_lines, JRE_line_sts, JRE_sts
 
 def load_jre_green_data(fn):
