@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="ja">
+<!--version 0.0.1-->
+<head>
+    <script type="text/json" src="assets/db.json"></script>
+</head>
+<body>
+<div>
+<form id="westexdp" method="POST" 
+  action="https://e5489.jr-odekake.net/e5489/cspc/CBExternalServiceReceivePC ">
+  <label for="CorpId">CorpId:</label>
+  <input name="CorpId" type="text" placeholder="CorpId" value="32001" required><br>
+  <label for="ReserveKey">ReserveKey:</label>
+  <input name="ReserveKey" type="text" placeholder="ReserveKey" value="0040100" required><br>
+  <label for="AdultNum">AdultNum:</label>
+  <input name="AdultNum" type="text" placeholder="AdultNum" value="1" required><br>
+  <label for="ChildNum">ChildNum:</label>
+  <input name="ChildNum" type="text" placeholder="ChildNum" value="0" required><br>
+  <label for="DepartDate">DepartDate:</label>
+  <input name="DepartDate" type="text" placeholder="DepartDate" value="20231210" required><br>
+  <button type="submit">Send</button>
+</form>
+</div>
+</body>
+</html>
