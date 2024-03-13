@@ -3,11 +3,13 @@
 <!--version 0.0.1-->
 <head>
     <script type="text/json" src="assets/db.json"></script>
+    <script type="text/javascript" src="assets/jquery-3.7.1.min.js"></script>
+    <script type="text/javascript" src="assets/formval.js"></script>
 </head>
 <body>
 <div>
-<form id="westexdp" method="POST" 
-  action="https://e5489.jr-odekake.net/e5489/cspc/CBExternalServiceReceivePC ">
+<form id="e5489free" method="POST" 
+  action="https://e5489.jr-odekake.net/e5489/cspc/CBExternalServiceReceivePC">
   <label for="CorpId">CorpId:</label>
   <input name="CorpId" type="text" placeholder="CorpId" value="32001" required><br>
   <label for="ReserveKey">ReserveKey:</label>
@@ -18,6 +20,30 @@
   <input name="ChildNum" type="text" placeholder="ChildNum" value="0" required><br>
   <label for="DepartDate">DepartDate:</label>
   <input name="DepartDate" type="text" placeholder="DepartDate" value="20231210" required><br>
+  <button type="submit">Send</button>
+</form>
+</div>
+<div>
+<form id="e5489transit" method="POST" 
+  action="https://e5489.jr-odekake.net/e5489/cspc/CBExternalServiceReceivePC">
+  <label for="CorpId">CorpId:</label>
+  <input name="CorpId" type="text" placeholder="CorpId" value="31001" required><br>
+  <label for="ReserveKey">ReserveKey:</label>
+  <input name="ReserveKey" type="text" placeholder="ReserveKey" value="04200178" required><br>
+  <label for="DepartDate">DepartDate:</label>
+  <input name="DepartDate" type="text" placeholder="DepartDate" value="20240318" required><br>
+  <label for="SpecifiedTime">SpecifiedTime:</label>
+  <input name="SpecifiedTime" type="text" placeholder="SpecifiedTime" value="0636" required><br>
+  <label for="DepartArriveType">DepartArriveType(0 fill depart or 1 fill arrive):</label>
+  <input name="DepartArriveType" type="text" placeholder="DepartArriveType" value="1" required><br>
+  <label for="DepartStName">DepartStName(fill with type 0):</label>
+  <input name="DepartStName" type="text" placeholder="DepartStName" value="米原" ><br>
+  <label for="ArriveStName">ArriveStName(fill with type 1):</label>
+  <input name="ArriveStName" type="text" placeholder="ArriveStName" value="名古屋" ><br>
+  <label for="AdultNum">AdultNum:</label>
+  <input name="AdultNum" type="text" placeholder="AdultNum" value="2" required><br>
+  <label for="ChildNum">ChildNum:</label>
+  <input name="ChildNum" type="text" placeholder="ChildNum" value="0" required><br>
   <button type="submit">Send</button>
 </form>
 </div>
